@@ -35,22 +35,22 @@ public partial class TodoListPage : ContentPage
                 DueDate = DateTime.Today.AddDays(1) 
             });
 
+            // Save to the JSON file
+            TodoStore.Save(); 
+            
+            // Refresh the list
             RefreshList();
         }
     }
 
-    // --- SORTING LOGIC ---
-    
     private void OnSortByPriorityClicked(object sender, EventArgs e)
     {
-        // Sort by Priority (1 is highest)
         var sortedList = TodoStore.Items.OrderBy(t => t.Priority).ToList();
         TodoCollection.ItemsSource = sortedList;
     }
 
     private void OnSortByDateClicked(object sender, EventArgs e)
     {
-        // Sort by Due Date (earliest first)
         var sortedList = TodoStore.Items.OrderBy(t => t.DueDate).ToList();
         TodoCollection.ItemsSource = sortedList;
     }

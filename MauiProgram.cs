@@ -1,27 +1,23 @@
 ﻿using Microsoft.Extensions.Logging;
-using LifeManagementApp.Services;
-using LifeManagementApp.ViewModels;
+using LifeManagementApp.Models; // Make sure this is here
 
 namespace LifeManagementApp;
 
 public static class MauiProgram
 {
-	public static MauiApp CreateMauiApp()
-	{
-		var builder = MauiApp.CreateBuilder();
-		builder
-			.UseMauiApp<App>()
-			.ConfigureFonts(fonts =>
-			{
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-			});
+    public static MauiApp CreateMauiApp()
+    {
+        var builder = MauiApp.CreateBuilder();
+        builder
+            .UseMauiApp<App>()
+            .ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            });
 
-#if DEBUG
-		builder.Logging.AddDebug();
-#endif
+        TodoStore.Load(); 
 
-		builder.Services.AddSingleton<IWeatherService, OpenMeteoWeatherService>();
-		return builder.Build();
-	}
+        return builder.Build();
+    }
 }
