@@ -14,3 +14,6 @@ A .NET MAUI application built for the Life Management course. It combines a real
 3. Run the app using Mac Catalyst:
    ```bash
    dotnet build -t:Run -f net9.0-maccatalyst
+
+## Use of AI 
+I used AI (Claude) to help troubleshoot the Mac Catalyst XAML binding crashes, generate the JSON file saving logic, and rewrite the To-Do list rendering using C# rather than XAML to prevent the app from crashing.
