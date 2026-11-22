@@ -4,53 +4,19 @@
              x:Class="LifeManagementApp.TodoListPage"
              Title="All To-Dos">
 
-    <VerticalStackLayout Padding="20" Spacing="15">
+    <Grid RowDefinitions="Auto,Auto,Auto,*" Padding="20" RowSpacing="15">
         
-        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+        <HorizontalStackLayout Grid.Row="0" Spacing="10" HorizontalOptions="Center">
             <Button Text="Sort by Priority" Clicked="OnSortByPriorityClicked" />
             <Button Text="Sort by Date" Clicked="OnSortByDateClicked" />
         </HorizontalStackLayout>
 
-        <Button Text="Add New To-Do" Clicked="OnAddClicked" />
+        <Button Grid.Row="1" Text="Add New To-Do" Clicked="OnAddClicked" />
         
-        <CollectionView x:Name="TodoCollection">
-            <CollectionView.ItemTemplate>
-                  <DataTemplate>
-                    <SwipeView>
-                        <SwipeView.RightItems>
-                            <SwipeItems>
-                                <SwipeItem Text="Delete" BackgroundColor="Red" Invoked="OnDeleteClicked" />
-                            </SwipeItems>
-                        </SwipeView.RightItems>
-                        
-                        <Frame Margin="0,5" Padding="10">
-                            <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="10">
-                                
-                                <CheckBox Grid.Column="0" 
-                                          IsChecked="{Binding IsDone}" 
-                                          CheckedChanged="OnCheckBoxChanged" 
-                                          VerticalOptions="Center" />
-                                
-                                <!-- Added TextDecorations here! -->
-                                <Label Grid.Column="1" 
-                                       Text="{Binding Title}" 
-                                       FontSize="18" 
-                                       VerticalOptions="Center">
-                                    <Label.Triggers>
-                                        <DataTrigger TargetType="Label" Binding="{Binding IsDone}" Value="True">
-                                            <Setter Property="TextDecorations" Value="Strikethrough" />
-                                            <Setter Property="TextColor" Value="Gray" />
-                                        </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
-                                
-                                <Label Grid.Column="2" Text="{Binding DueDate, StringFormat='Due: {0:MM/dd}'}" FontSize="14" TextColor="Gray" VerticalOptions="Center" />
-                            </Grid>
-                        </Frame>
-                    </SwipeView>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <!-- This replaces the CollectionView -->
+        <ScrollView Grid.Row="3">
+            <VerticalStackLayout x:Name="TodoListLayout" Spacing="10" />
+        </ScrollView>
 
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>
