@@ -29,16 +29,13 @@ public partial class TodoListPage : ContentPage
         {
             TodoStore.Items.Add(new TodoItem 
             { 
-                Id = TodoStore.Items.Count + 1, 
+                Id = (int)(DateTime.Now.Ticks % int.MaxValue), 
                 Title = result, 
                 Priority = 3, 
                 DueDate = DateTime.Today.AddDays(1) 
             });
 
-            // Save to the JSON file
             TodoStore.Save(); 
-            
-            // Refresh the list
             RefreshList();
         }
     }
@@ -53,5 +50,25 @@ public partial class TodoListPage : ContentPage
     {
         var sortedList = TodoStore.Items.OrderBy(t => t.DueDate).ToList();
         TodoCollection.ItemsSource = sortedList;
+    }
+
+    private async void OnCheckBoxChanged(object sender, CheckedChangedEventArgs e)
+    {
+        TodoStore.Save();
+        await Task.Delay(100); // Fixes the Mac UI glitch
+        RefreshList(); 
+    }
+
+    private void OnDeleteClicked(object sender, EventArgs e)
+    {
+        var swipeItem = sender as SwipeItem;
+        var todoItem = swipeItem?.BindingContext as TodoItem;
+
+        if (todoItem != null)
+        {
+            TodoStore.Items.Remove(todoItem);
+            TodoStore.Save();
+            RefreshList();
+        }
     }
 }
